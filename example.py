@@ -45,7 +45,7 @@ PTC_CLIENT_SECRET = credentials.get('ptc_client_secret', None)
 ANDROID_ID = credentials.get('android_id', None)
 SERVICE = credentials.get('service', None)
 CLIENT_SIG = credentials.get('client_sig', None)
-GOOGLEMAPS_KEY = credentials.get('gmaps_key', None)
+GOOGLEMAPS_KEY = os.environ.get('GMAPS_KEY') or credentials.get('gmaps_key', None)
 
 SESSION = requests.session()
 SESSION.headers.update({'User-Agent': 'Niantic App'})
@@ -614,6 +614,8 @@ def main():
 
         print('Completed: ' + str(
             ((step+1) + pos * .25 - .25) / (steplimit2) * 100) + '%')
+
+    time.sleep(30)
 
     global NEXT_LAT, NEXT_LONG
     if (NEXT_LAT and NEXT_LONG and
